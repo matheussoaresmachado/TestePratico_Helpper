@@ -1,0 +1,64 @@
+<%- include ('partials/header') %>
+<%- include ('partials/navbar') %>
+
+<div class="container">
+    <h2>Detalhes do usuário</h2>
+    <div class="row">
+        <div class="form-group col">
+            <b>Nome:</b><br>
+            <%= cliente.nome %>
+        </div>
+        <div class="form-group col-4">
+            <% if(cliente.cpf){ %>
+            <b>CPF:</b><br>
+            <%= cliente.cpf %>
+            <% }else{ %>
+            <b>CNPJ:</b><br>
+            <%= cliente.cnpj %>
+            <% } %>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="form-group col">
+            <b>Email:</b><br>
+            <%= cliente.email %>
+        </div>
+        <div class="form-group col">
+            <b>Telefone:</b><br>
+            <%= cliente.telefone %>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="form-group col-4">
+            <b>CEP:</b><br>
+            <%= cliente.cep %>
+        </div>
+        <div class="form-group col-6">
+            <b>Logradouro:</b><br>
+            <%= cliente.logradouro %>
+        </div>
+        <div class="form-group col-2">
+            <b>Número:</b><br>
+            <%= cliente.numero %>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="form-group col">
+            <b>Bairro:</b><br>
+            <%= cliente.bairro %>
+        </div>
+        <div class="form-group col">
+            <b>Cidade:</b><br>
+            <%= cliente.cidade %>
+        </div>
+        <div class="form-group col">
+            <b>Estado:</b><br>
+            <%= cliente.estado %>
+        </div>
+    </div>
+</div>
+
+<%- include ('partials/footer') %>

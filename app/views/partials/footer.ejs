@@ -1,0 +1,150 @@
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="js/jquery.mask.js"></script>
+
+    <script type=text/javascript>
+
+
+        function validaForm(frm) {
+            function ehValidoCPF(strCPF) {
+                var Soma;
+                var Resto;
+                Soma = 0;
+                if (strCPF == "00000000000") return false;
+
+                for (i=1; i<=9; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (11 - i);
+                Resto = (Soma * 10) % 11;
+
+                if ((Resto == 10) || (Resto == 11))  Resto = 0;
+                if (Resto != parseInt(strCPF.substring(9, 10)) ) return false;
+
+                Soma = 0;
+                for (i = 1; i <= 10; i++) Soma = Soma + parseInt(strCPF.substring(i-1, i)) * (12 - i);
+                Resto = (Soma * 10) % 11;
+
+                if ((Resto == 10) || (Resto == 11))  Resto = 0;
+                if (Resto != parseInt(strCPF.substring(10, 11) ) ) return false;
+                return true;
+            }
+
+            const regexNum = /[0-9]/;
+            const regexEsp = /[@!?#$%^&*()/\\]/;
+            const regexChar = /[a-z|A-Z]/; 
+            
+            if(frm.nome.value == "" || frm.nome.value == null || frm.nome.value.length < 3 || regexNum.test(frm.nome.value) || regexEsp.test(frm.nome.value)){
+                alert("Por favor, indique o seu nome.");
+                frm.nome.focus();
+                return false;
+            }
+            
+            if(frm.email.value.indexOf("@") == -1 ||
+            frm.email.value.indexOf(".") == -1 ||
+            frm.email.value == "" ||
+            frm.email.value == null) {
+                alert("Por favor, indique um E-mail válido.");
+                frm.email.focus();
+                return false;
+            }
+
+            if(frm.cpfOuCnpj.value == "" ||
+            frm.cpfOuCnpj.value == null ||
+            (frm.cpfOuCnpj.value.length != 14 &&
+            frm.cpfOuCnpj.value.length != 18)) {
+                alert("Por favor, indique um CPF ou CNPJ válido.");
+                frm.cpfOuCnpj.focus();
+                return false;
+            }
+
+            if(frm.cpfOuCnpj.value.length == 14){
+                var cpfLimpo = frm.cpfOuCnpj.value.replaceAll('.','');
+                cpfLimpo = cpfLimpo.replace('-','');
+                console.log(cpfLimpo);
+                if(!ehValidoCPF(cpfLimpo)){
+                    alert("Por favor, indique um CPF válido.");
+                    return false;
+                }
+                    
+            }
+
+            if(frm.telefone.value == "" ||
+            frm.telefone.value == null ||
+            (frm.telefone.value.length != 14 &&
+            frm.telefone.value.length != 15)) {
+                alert("Por favor, indique um Telefone válido.");
+                frm.telefone.focus();
+                return false;
+            }
+
+            if(frm.cep.value == "" ||
+            frm.cep.value == null ||
+            frm.cep.value.length != 9) {
+                alert("Por favor, indique um CEP válido.");
+                frm.cep.focus();
+                return false;
+            }
+
+            if(frm.logradouro.value == "" ||
+            frm.logradouro.value == null) {
+                alert("Por favor, indique um Logradouro válido.");
+                frm.logradouro.focus();
+                return false;
+            }
+
+            if(frm.numero.value == "" ||
+            frm.numero.value == null ||
+            isNaN(frm.numero.value)) {
+                alert("Por favor, indique um Número válido.");
+                frm.numero.focus();
+                return false;
+            }
+
+            if(frm.bairro.value == "" ||
+            frm.bairro.value == null) {
+                alert("Por favor, indique um Bairro válido.");
+                frm.bairro.focus();
+                return false;
+            }
+
+            if(frm.cidade.value == "" ||
+            frm.cidade.value == null) {
+                alert("Por favor, indique uma Cidade válida.");
+                frm.cidade.focus();
+                return false;
+            }
+
+            if(frm.estado.value == "" ||
+            frm.estado.value == null) {
+                alert("Por favor, indique um Estado válido.");
+                frm.estado.focus();
+                return false;
+            }
+        }
+
+        var cpfOuCnpj = {
+            onKeyPress: function (cpf, ev, el, op) {
+                var masks = ['000.000.000-000', '00.000.000/0000-00'],
+                    mask = (cpf.length > 14) ? masks[1] : masks[0];
+                el.mask(mask, op);
+            }
+        }
+
+        $('#cpfOuCnpj').mask('000.000.000-000', cpfOuCnpj);
+
+        var telefone = {
+            onKeyPress: function (cpf, ev, el, op) {
+                var masks = ['(00) 0000-00000', '(00) 00000-0000'],
+                    mask = (cpf.length > 14) ? masks[1] : masks[0];
+                el.mask(mask, op);
+            }
+        }
+
+        $('#telefone').mask('(00) 0000-0000', telefone);
+
+        $('#cep').mask('00000-000');
+
+        $('#numero').mask('00000');
+    </script>
+    
+</body>
+</html>

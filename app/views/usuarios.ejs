@@ -1,0 +1,54 @@
+<%- include ('partials/header') %>
+<%- include ('partials/navbar') %>
+
+    <div class="container">
+        <h2>Usuários</h2>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Telefone</th>
+                    <th>Email</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% clientes.forEach(cliente => { %>
+                    <tr>
+                        <th><%= cliente.nome %></th>
+                        <th><%= cliente.telefone %></th>
+                        <th><%= cliente.email %></th>
+                        <th>
+                            <a href="/usuarios/<%= cliente.id %>" class="btn btn-warning">Detalhes</a>
+                            
+                            <form method="POST" action="/deletar" style="display: inline;" onsubmit="confirmarDelecao(event, this)">
+                                <input type="hidden" name="id" value=" <%= cliente.id %>">
+                                <button class="btn btn-danger">Excluir</button>
+                            </form>
+                        </th>
+                    </tr>
+                <% }) %> 
+            </tbody>
+        </table>       
+
+    </div>
+
+    <div id="modal-detalhes" class="modal-container">
+        <div class="caixa">
+            <button class="fechar">X</button>
+            <h1>DETALHES</h1>
+        </div>
+        
+    </div>
+
+<script>
+    function confirmarDelecao(event, form){
+        event.preventDefault();
+        if(confirm("Você realmente deseja excluir este usuário?"))
+            form.submit();
+    }
+    
+</script>
+    
+<%- include ('partials/footer') %>
